@@ -42,6 +42,7 @@ function Pokedex() {
   const [pokemon, setPokemon] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pokemonsPerPage] = useState(15);
+  const [input, setInput] = useState("");
 
   useEffect(() => {
     axios
@@ -61,9 +62,17 @@ function Pokedex() {
     return <div>Ładowanie...</div>;
   }
 
+  const filteredPokemons = pokemon.filter((pokemon) => {
+    if (input === "") {
+      return pokemon;
+    } else if (pokemon.name.toLowerCase().includes(input.toLowerCase())) {
+      return pokemon.name;
+    }
+  });
+
   const indexOfLastPokemon = currentPage * pokemonsPerPage;
   const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
-  const currentPokemons = pokemon.slice(
+  const currentPokemons = filteredPokemons.slice(
     indexOfFirstPokemon,
     indexOfLastPokemon
   );
@@ -73,23 +82,24 @@ function Pokedex() {
     <Background>
       <Search>
         <h2>Wyszukiwarka</h2>
-
         <TextField
           id="outlined-basic"
-          color="neutral"
+          color="primary"
           label="Wpisz nazwę Pokémona"
           variant="outlined"
+          onChange={(event) => {
+            setInput(event.target.value);
+          }}
         />
       </Search>
       <List>
         <Pagination
           pokemonsPerPage={pokemonsPerPage}
-          totalPokemons={pokemon.length}
+          totalPokemons={filteredPokemons.length}
           paginate={paginate}
         />
         <Lista pokemon={currentPokemons} />
       </List>
-      {/* {console.log(pokemonsPerPage)} */}
     </Background>
   );
 }

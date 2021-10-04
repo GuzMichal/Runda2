@@ -22,7 +22,7 @@ function Pagination({ pokemonsPerPage, totalPokemons, paginate }) {
         <Button
           key={number}
           variant="contained"
-          color="neutral"
+          color="primary"
           size="large"
           style={{ position: "initial", margin: 1 }}
           onClick={() => paginate(number)}
@@ -30,7 +30,6 @@ function Pagination({ pokemonsPerPage, totalPokemons, paginate }) {
           {number}
         </Button>
       ))}
-      {/* {console.log(pokemonsPerPage)} */}
     </Buttons>
   );
 }
