@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { TextField } from "@material-ui/core";
 import axios from "axios";
 import Lista from "./Lista";
-// import Pagination from "./Pagination";
+import Pagination from "./Pagination";
 
 const Background = styled.div`
   display: flex;
@@ -39,20 +39,9 @@ const List = styled.div`
 `;
 
 function Pokedex() {
-  const [pokemon, setPokemon] = useState(null);
-  // const [offset, setOffset] = useState(0);
-
-  // const prev = () => {
-  //   if (offset === 0) {
-  //     alert("Jesteś na pierwszej stronie");
-  //   } else setOffset(offset - 15);
-  // };
-
-  // const next = () => {
-  //   if (offset === 150) {
-  //     alert("Jesteś na ostatniej stronie");
-  //   } else setOffset(offset + 15);
-  // };
+  const [pokemon, setPokemon] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pokemonsPerPage] = useState(15);
 
   useEffect(() => {
     axios
@@ -72,6 +61,14 @@ function Pokedex() {
     return <div>Ładowanie...</div>;
   }
 
+  const indexOfLastPokemon = currentPage * pokemonsPerPage;
+  const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
+  const currentPokemons = pokemon.slice(
+    indexOfFirstPokemon,
+    indexOfLastPokemon
+  );
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <Background>
       <Search>
@@ -79,15 +76,20 @@ function Pokedex() {
 
         <TextField
           id="outlined-basic"
+          color="neutral"
           label="Wpisz nazwę Pokémona"
           variant="outlined"
         />
       </Search>
       <List>
-        {/* <Pagination prev={prev} next={next} /> */}
-        <Lista pokemon={pokemon} />
+        <Pagination
+          pokemonsPerPage={pokemonsPerPage}
+          totalPokemons={pokemon.length}
+          paginate={paginate}
+        />
+        <Lista pokemon={currentPokemons} />
       </List>
-      {console.log(pokemon)}
+      {/* {console.log(pokemonsPerPage)} */}
     </Background>
   );
 }

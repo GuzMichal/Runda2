@@ -3,32 +3,34 @@ import styled from "styled-components";
 import { Button } from "@material-ui/core";
 
 const Buttons = styled.div`
+  width: 100%;
+  margin: 2% 0;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  color: white;
 `;
 
-function Pagination({ prev, next }) {
+function Pagination({ pokemonsPerPage, totalPokemons, paginate }) {
+  const pageNumbers = [];
+
+  for (let i = 1; i <= Math.ceil(totalPokemons / pokemonsPerPage); i++) {
+    pageNumbers.push(i);
+  }
   return (
     <Buttons>
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        style={{ position: "initial", margin: 5 }}
-        onClick={prev}
-      >
-        Poprzednia
-      </Button>
-
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        style={{ position: "initial", margin: 5 }}
-        onClick={next}
-      >
-        Następna
-      </Button>
+      {pageNumbers.map((number) => (
+        <Button
+          key={number}
+          variant="contained"
+          color="neutral"
+          size="large"
+          style={{ position: "initial", margin: 1 }}
+          onClick={() => paginate(number)}
+        >
+          {number}
+        </Button>
+      ))}
+      {/* {console.log(pokemonsPerPage)} */}
     </Buttons>
   );
 }
