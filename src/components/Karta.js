@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const CharacterCard = styled.div`
   display: flex;
@@ -10,6 +11,10 @@ const CharacterCard = styled.div`
   align-items: center;
   margin: 20px 20px;
   height: 90%;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 const CharacterName = styled.h3`
@@ -49,28 +54,30 @@ const StatName = styled.p`
 
 function Karta({ name, base_experience, height, weight, abilities, sprites }) {
   return (
-    <CharacterCard>
-      <Img src={sprites.other.dream_world.front_default} alt={name} />
-      <CharacterName>{name}</CharacterName>
-      <Stats>
-        <Stat>
-          {height}
-          <StatName>Height</StatName>
-        </Stat>
-        <Stat>
-          {base_experience}
-          <StatName>Base Experience</StatName>
-        </Stat>
-        <Stat>
-          {weight}
-          <StatName>Weight</StatName>
-        </Stat>
-        <Stat>
-          {abilities[0].ability.name}
-          <StatName>Ability</StatName>
-        </Stat>
-      </Stats>
-    </CharacterCard>
+    <Link to={`${name}`}>
+      <CharacterCard>
+        <Img src={sprites.other.dream_world.front_default} alt={name} />
+        <CharacterName>{name}</CharacterName>
+        <Stats>
+          <Stat>
+            {height}
+            <StatName>Height</StatName>
+          </Stat>
+          <Stat>
+            {base_experience}
+            <StatName>Base Experience</StatName>
+          </Stat>
+          <Stat>
+            {weight}
+            <StatName>Weight</StatName>
+          </Stat>
+          <Stat>
+            {abilities[0].ability.name}
+            <StatName>Ability</StatName>
+          </Stat>
+        </Stats>
+      </CharacterCard>
+    </Link>
   );
 }
 
