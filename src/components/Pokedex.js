@@ -18,7 +18,7 @@ const Search = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 30vh;
+  height: 23vh;
   background: rgb(245, 245, 241);
   background: linear-gradient(
     0deg,

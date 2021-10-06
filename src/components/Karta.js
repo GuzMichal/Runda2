@@ -12,6 +12,7 @@ const CharacterCard = styled.div`
   margin: 20px 20px;
   height: 90%;
   cursor: pointer;
+  border-radius: 5px;
   &:hover {
     transform: scale(1.1);
   }
@@ -54,7 +55,7 @@ const StatName = styled.p`
 
 function Karta({ name, base_experience, height, weight, abilities, sprites }) {
   return (
-    <Link to={`${name}`}>
+    <Link to={`${name}`} style={{ textDecoration: "none" }}>
       <CharacterCard>
         <Img src={sprites.other.dream_world.front_default} alt={name} />
         <CharacterName>{name}</CharacterName>

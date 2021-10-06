@@ -9,7 +9,7 @@ const Navi = styled.div`
   position: sticky;
   top: 0;
   width: 100%;
-  height: 15vh;
+  height: 10vh;
   background: #e50914;
 `;
 
