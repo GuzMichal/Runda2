@@ -13,7 +13,7 @@ const Card = styled.div`
   width: 30vw;
 `;
 
-function Lista({ pokemon }) {
+function Lista({ pokemon, addFavouritePokemon }) {
   return (
     <Karty>
       {pokemon.map(
@@ -26,10 +26,12 @@ function Lista({ pokemon }) {
               weight={weight}
               abilities={abilities}
               sprites={sprites}
+              addFavouritePokemon={addFavouritePokemon}
             />
           </Card>
         )
       )}
+      {/* {console.log(pokemon)} */}
     </Karty>
   );
 }

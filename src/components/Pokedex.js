@@ -58,10 +58,6 @@ function Pokedex() {
       });
   }, []);
 
-  if (!pokemon) {
-    return <div>Ładowanie...</div>;
-  }
-
   const filteredPokemons = pokemon.filter((pokemon) => {
     if (input === "") {
       return pokemon;
@@ -77,6 +73,10 @@ function Pokedex() {
     indexOfLastPokemon
   );
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  if (!pokemon) {
+    return <div>Ładowanie...</div>;
+  }
 
   return (
     <Background>

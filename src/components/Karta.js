@@ -53,11 +53,19 @@ const StatName = styled.p`
   font-weight: 600;
 `;
 
-function Karta({ name, base_experience, height, weight, abilities, sprites }) {
+function Karta({
+  name,
+  base_experience,
+  height,
+  weight,
+  abilities,
+  sprites,
+  addFavouritePokemon,
+}) {
   return (
     <Link to={`${name}`} style={{ textDecoration: "none" }}>
       <CharacterCard>
-        <Img src={sprites.other.dream_world.front_default} alt={name} />
+        <Img src={sprites?.other?.dream_world.front_default} alt={name} />
         <CharacterName>{name}</CharacterName>
         <Stats>
           <Stat>
@@ -73,7 +81,7 @@ function Karta({ name, base_experience, height, weight, abilities, sprites }) {
             <StatName>Weight</StatName>
           </Stat>
           <Stat>
-            {abilities[0].ability.name}
+            {/* {abilities?.[0].ability.name} */}
             <StatName>Ability</StatName>
           </Stat>
         </Stats>

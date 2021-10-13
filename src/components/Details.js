@@ -9,9 +9,6 @@ import Favorite from "@mui/icons-material/Favorite";
 import SportsKabaddiOutlinedIcon from "@mui/icons-material/SportsKabaddiOutlined";
 import SportsKabaddiIcon from "@mui/icons-material/SportsKabaddi";
 
-import AddToFav from "./AddToFav";
-import AddToArena from "./AddToArena";
-
 const Background = styled.div`
   display: flex;
   flex-direction: column;
@@ -99,7 +96,23 @@ function Details({ match }) {
       setInfo(response.data);
     };
     loadInfo();
-  }, []);
+  }, [match.params.name]);
+
+  const dodajDoUlubionych = () => {
+    axios.post("http://localhost:3000/favourites", {
+      name: info.name,
+      height: info.height,
+      weight: info.weight,
+      abilities: info.abilities,
+      sprites: info.sprites,
+      base_experience: info.base_experience,
+      id: info.id,
+    });
+  };
+
+  const usunZUlubionych = () => {
+    axios.delete(`http://localhost:3000/favourites/${info.id}`);
+  };
 
   if (!info) {
     return <div>Ładowanie...</div>;
@@ -133,8 +146,28 @@ function Details({ match }) {
               </Stat>
             </StatContainer>
             <Actions>
-              <AddToFav />
-              <AddToArena />
+              <Checkbox
+                onChange={dodajDoUlubionych}
+                icon={<FavoriteBorder style={{ fontSize: 50 }} />}
+                checkedIcon={
+                  <Favorite style={{ fontSize: 50, color: "#E50914" }} />
+                }
+              />
+              <Checkbox
+                onChange={usunZUlubionych}
+                icon={<FavoriteBorder style={{ fontSize: 50 }} />}
+                checkedIcon={
+                  <Favorite style={{ fontSize: 50, color: "#E50914" }} />
+                }
+              />
+              {/* <Checkbox
+                icon={<SportsKabaddiOutlinedIcon style={{ fontSize: 50 }} />}
+                checkedIcon={
+                  <SportsKabaddiIcon
+                    style={{ fontSize: 50, color: "#E50914" }}
+                  />
+                }
+              /> */}
             </Actions>
           </Stats>
         </CardBox>
@@ -162,6 +195,7 @@ function Details({ match }) {
           </Button>
         </Link>
       </CardDiv>
+      {console.log(info)}
     </Background>
   );
 }
