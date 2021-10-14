@@ -53,15 +53,7 @@ const StatName = styled.p`
   font-weight: 600;
 `;
 
-function Karta({
-  name,
-  base_experience,
-  height,
-  weight,
-  abilities,
-  sprites,
-  addFavouritePokemon,
-}) {
+function Karta({ name, base_experience, height, weight, abilities, sprites }) {
   return (
     <Link to={`${name}`} style={{ textDecoration: "none" }}>
       <CharacterCard>
@@ -81,7 +73,7 @@ function Karta({
             <StatName>Weight</StatName>
           </Stat>
           <Stat>
-            {/* {abilities?.[0].ability.name} */}
+            {abilities?.[0].ability.name}
             <StatName>Ability</StatName>
           </Stat>
         </Stats>

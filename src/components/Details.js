@@ -87,6 +87,18 @@ const StatName = styled.p`
 
 function Details({ match }) {
   const [info, setInfo] = useState([]);
+  const [arena, setArena] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/arena`)
+      .then((res) => {
+        return res.data;
+      })
+      .then((results) => {
+        setArena(results);
+      });
+  }, []);
 
   useEffect(() => {
     const loadInfo = async () => {
@@ -114,12 +126,34 @@ function Details({ match }) {
     axios.delete(`http://localhost:3000/favourites/${info.id}`);
   };
 
+  const dodajDoAreny = () => {
+    if (arena.length >= 2) {
+      alert(
+        "W Arenie są już dwa Pokemony ! Usuń jednego i spróbuj ponownie :-)"
+      );
+    } else
+      axios.post("http://localhost:3000/arena", {
+        name: info.name,
+        height: info.height,
+        weight: info.weight,
+        abilities: info.abilities,
+        sprites: info.sprites,
+        base_experience: info.base_experience,
+        id: info.id,
+      });
+  };
+
+  const usunZAreny = () => {
+    axios.delete(`http://localhost:3000/arena/${info.id}`);
+  };
+
   if (!info) {
     return <div>Ładowanie...</div>;
   }
 
   return (
     <Background>
+      {console.log(arena.length)}
       <CardDiv>
         <PokeName>{info.name}</PokeName>
         <CardBox>
@@ -160,14 +194,24 @@ function Details({ match }) {
                   <Favorite style={{ fontSize: 50, color: "#E50914" }} />
                 }
               />
-              {/* <Checkbox
+              <Checkbox
+                onChange={dodajDoAreny}
                 icon={<SportsKabaddiOutlinedIcon style={{ fontSize: 50 }} />}
                 checkedIcon={
                   <SportsKabaddiIcon
                     style={{ fontSize: 50, color: "#E50914" }}
                   />
                 }
-              /> */}
+              />
+              <Checkbox
+                onChange={usunZAreny}
+                icon={<SportsKabaddiOutlinedIcon style={{ fontSize: 50 }} />}
+                checkedIcon={
+                  <SportsKabaddiIcon
+                    style={{ fontSize: 50, color: "#E50914" }}
+                  />
+                }
+              />
             </Actions>
           </Stats>
         </CardBox>
@@ -195,7 +239,6 @@ function Details({ match }) {
           </Button>
         </Link>
       </CardDiv>
-      {console.log(info)}
     </Background>
   );
 }

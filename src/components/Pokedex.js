@@ -10,6 +10,7 @@ const Background = styled.div`
   flex-direction: column;
   background-color: #221f1f;
   height: 100%;
+  min-height: 90vh;
   align-items: center;
 `;
 
@@ -75,33 +76,36 @@ function Pokedex() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   if (!pokemon) {
-    return <div>Ładowanie...</div>;
-  }
-
-  return (
-    <Background>
-      <Search>
-        <h2>Wyszukiwarka</h2>
-        <TextField
-          id="outlined-basic"
-          color="primary"
-          label="Wpisz nazwę Pokémona"
-          variant="outlined"
-          onChange={(event) => {
-            setInput(event.target.value);
-          }}
-        />
-      </Search>
-      <List>
-        <Pagination
-          pokemonsPerPage={pokemonsPerPage}
-          totalPokemons={filteredPokemons.length}
-          paginate={paginate}
-        />
-        <Lista pokemon={currentPokemons} />
-      </List>
-    </Background>
-  );
+    return (
+      <Background>
+        <h1>Ładowanie...</h1>
+      </Background>
+    );
+  } else
+    return (
+      <Background>
+        <Search>
+          <h2>Wyszukiwarka</h2>
+          <TextField
+            id="outlined-basic"
+            color="primary"
+            label="Wpisz nazwę Pokémona"
+            variant="outlined"
+            onChange={(event) => {
+              setInput(event.target.value);
+            }}
+          />
+        </Search>
+        <List>
+          <Pagination
+            pokemonsPerPage={pokemonsPerPage}
+            totalPokemons={filteredPokemons.length}
+            paginate={paginate}
+          />
+          <Lista pokemon={currentPokemons} />
+        </List>
+      </Background>
+    );
 }
 
 export default Pokedex;

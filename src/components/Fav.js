@@ -9,6 +9,7 @@ const Background = styled.div`
   flex-direction: column;
   background-color: #221f1f;
   height: 100%;
+  min-height: 90vh;
   align-items: center;
 `;
 
@@ -48,23 +49,25 @@ function Fav() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   if (!pokemon) {
-    return <h1>BRAK ULUBIONYCH POKEMONÓW :(</h1>;
-  }
-
-  return (
-    <Background>
-      <h1>Ulubione</h1>
-
-      <List>
-        <Pagination
-          pokemonsPerPage={pokemonsPerPage}
-          totalPokemons={pokemon.length}
-          paginate={paginate}
-        />
-        <Lista pokemon={currentPokemons} />
-      </List>
-    </Background>
-  );
+    return (
+      <Background>
+        <h1>BRAK ULUBIONYCH POKEMONÓW :(</h1>
+      </Background>
+    );
+  } else
+    return (
+      <Background>
+        <h1>Ulubione</h1>
+        <List>
+          <Pagination
+            pokemonsPerPage={pokemonsPerPage}
+            totalPokemons={pokemon.length}
+            paginate={paginate}
+          />
+          <Lista pokemon={currentPokemons} />
+        </List>
+      </Background>
+    );
 }
 
 export default Fav;
