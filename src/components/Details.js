@@ -88,17 +88,8 @@ const StatName = styled.p`
 function Details({ match }) {
   const [info, setInfo] = useState([]);
   const [arena, setArena] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3000/arena`)
-      .then((res) => {
-        return res.data;
-      })
-      .then((results) => {
-        setArena(results);
-      });
-  }, []);
+  const [isFavourite, setIsFavourite] = useState(null);
+  const [isInArena, setIsInArena] = useState(null);
 
   useEffect(() => {
     const loadInfo = async () => {
@@ -108,30 +99,58 @@ function Details({ match }) {
       setInfo(response.data);
     };
     loadInfo();
-  }, [match.params.name]);
+  }, []);
 
-  const dodajDoUlubionych = () => {
-    axios.post("http://localhost:3000/favourites", {
-      name: info.name,
-      height: info.height,
-      weight: info.weight,
-      abilities: info.abilities,
-      sprites: info.sprites,
-      base_experience: info.base_experience,
-      id: info.id,
+  useEffect(() => {
+    axios.get(`http://localhost:3000/favourites`).then((response) => {
+      const isPokemonFavourite = response.data
+        .map((item) => item.id)
+        .includes(info.id);
+      setIsFavourite(isPokemonFavourite);
     });
+  }, [isFavourite]);
+
+  const handleAddToFavourites = () => {
+    if (isFavourite === false) {
+      axios.post("http://localhost:3000/favourites", {
+        name: info.name,
+        height: info.height,
+        weight: info.weight,
+        abilities: info.abilities,
+        sprites: info.sprites,
+        base_experience: info.base_experience,
+        id: info.id,
+      });
+      setIsFavourite(true);
+    } else {
+      axios.delete(
+        `http://localhost:3000/favourites/${info.id}`,
+        setIsFavourite(false)
+      );
+    }
   };
 
-  const usunZUlubionych = () => {
-    axios.delete(`http://localhost:3000/favourites/${info.id}`);
-  };
+  useEffect(() => {
+    axios.get(`http://localhost:3000/arena`).then((response) => {
+      setArena(response.data);
+      const isPokemonInArena = response.data
+        .map((item) => item.id)
+        .includes(info.id);
+      setIsInArena(isPokemonInArena);
+    });
+  }, [isInArena]);
 
-  const dodajDoAreny = () => {
-    if (arena.length >= 2) {
+  const handleAddToArena = () => {
+    if (arena.length >= 2 && isInArena === true) {
+      axios.delete(
+        `http://localhost:3000/arena/${info.id}`,
+        setIsInArena(false)
+      );
+    } else if (arena.length >= 2) {
       alert(
         "W Arenie są już dwa Pokemony ! Usuń jednego i spróbuj ponownie :-)"
       );
-    } else
+    } else if (isInArena === false) {
       axios.post("http://localhost:3000/arena", {
         name: info.name,
         height: info.height,
@@ -141,10 +160,13 @@ function Details({ match }) {
         base_experience: info.base_experience,
         id: info.id,
       });
-  };
-
-  const usunZAreny = () => {
-    axios.delete(`http://localhost:3000/arena/${info.id}`);
+      setIsInArena(true);
+    } else if (isInArena === true) {
+      axios.delete(
+        `http://localhost:3000/arena/${info.id}`,
+        setIsInArena(false)
+      );
+    }
   };
 
   if (!info) {
@@ -153,7 +175,6 @@ function Details({ match }) {
 
   return (
     <Background>
-      {console.log(arena.length)}
       <CardDiv>
         <PokeName>{info.name}</PokeName>
         <CardBox>
@@ -181,30 +202,16 @@ function Details({ match }) {
             </StatContainer>
             <Actions>
               <Checkbox
-                onChange={dodajDoUlubionych}
+                checked={isFavourite}
+                onChange={handleAddToFavourites}
                 icon={<FavoriteBorder style={{ fontSize: 50 }} />}
                 checkedIcon={
                   <Favorite style={{ fontSize: 50, color: "#E50914" }} />
                 }
               />
               <Checkbox
-                onChange={usunZUlubionych}
-                icon={<FavoriteBorder style={{ fontSize: 50 }} />}
-                checkedIcon={
-                  <Favorite style={{ fontSize: 50, color: "#E50914" }} />
-                }
-              />
-              <Checkbox
-                onChange={dodajDoAreny}
-                icon={<SportsKabaddiOutlinedIcon style={{ fontSize: 50 }} />}
-                checkedIcon={
-                  <SportsKabaddiIcon
-                    style={{ fontSize: 50, color: "#E50914" }}
-                  />
-                }
-              />
-              <Checkbox
-                onChange={usunZAreny}
+                checked={isInArena}
+                onChange={handleAddToArena}
                 icon={<SportsKabaddiOutlinedIcon style={{ fontSize: 50 }} />}
                 checkedIcon={
                   <SportsKabaddiIcon

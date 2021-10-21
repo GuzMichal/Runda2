@@ -57,9 +57,9 @@ const StatName = styled.p`
   font-weight: 600;
 `;
 
-function FighterContainer({ pokemon }) {
+function FighterContainer({ pokemon, setArenaLength }) {
   const usunZAreny = () => {
-    axios.delete(`http://localhost:3000/arena/${pokemon.id}`);
+    axios.delete(`http://localhost:3000/arena/${pokemon.id}`, setArenaLength());
   };
 
   if (!pokemon) {

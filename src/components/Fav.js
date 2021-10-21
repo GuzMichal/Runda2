@@ -59,6 +59,7 @@ function Fav() {
       <Background>
         <h1>Ulubione</h1>
         <List>
+          {console.log}
           <Pagination
             pokemonsPerPage={pokemonsPerPage}
             totalPokemons={pokemon.length}

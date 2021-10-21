@@ -103,6 +103,11 @@ function Pokedex() {
             paginate={paginate}
           />
           <Lista pokemon={currentPokemons} />
+          <Pagination
+            pokemonsPerPage={pokemonsPerPage}
+            totalPokemons={filteredPokemons.length}
+            paginate={paginate}
+          />
         </List>
       </Background>
     );

@@ -14,21 +14,25 @@ const Background = styled.div`
 
 function Arena() {
   const [pokemon, setPokemon] = useState([]);
+  const [arenaLength, setArenaLength] = useState();
+  const [fightButton, setFightButton] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3000/arena`)
-      .then((res) => {
-        return res.data;
-      })
-      .then((results) => {
-        setPokemon(results);
-      });
-  }, [pokemon]);
+    axios.get(`http://localhost:3000/arena`).then((response) => {
+      setPokemon(response.data);
+      const arrayLength = response.data.length === 2 ? false : true;
+      setFightButton(arrayLength);
+      setArenaLength(arrayLength);
+    });
+  }, [arenaLength]);
 
   return (
     <Background>
-      <ArenaBox pokemon={pokemon} />
+      <ArenaBox
+        pokemon={pokemon}
+        fightButton={fightButton}
+        setArenaLength={setArenaLength}
+      />
     </Background>
   );
 }
