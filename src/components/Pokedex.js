@@ -14,6 +14,20 @@ const Background = styled.div`
   align-items: center;
 `;
 
+const Load = styled.div`
+  display: flex;
+  color: #f5f5f1;
+  height: 50vh;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+`;
+
+const Title = styled.h2`
+  letter-spacing: 4px;
+  color: black;
+`;
+
 const Search = styled.div`
   display: flex;
   flex-direction: column;
@@ -75,17 +89,17 @@ function Pokedex() {
   );
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  if (!pokemon) {
+  if (pokemon.length === 0) {
     return (
       <Background>
-        <h1>Ładowanie...</h1>
+        <Load>Ładowanie...</Load>
       </Background>
     );
   } else
     return (
       <Background>
         <Search>
-          <h2>Wyszukiwarka</h2>
+          <Title>Wyszukiwarka</Title>
           <TextField
             id="outlined-basic"
             color="primary"

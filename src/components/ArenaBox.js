@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import FighterContainer from "./FighterContainer";
 import { Button } from "@material-ui/core";
@@ -68,39 +68,57 @@ function ArenaBox({ pokemon, fightButton, setArenaLength }) {
   const result = "-- WYNIK POJEDYNKU--";
   const [winner, setWinner] = useState(result);
   const [showClearArena, setShowClearArena] = useState(false);
+  const [firstFighterOpacity, setFirstFighterOpacity] = useState({
+    opacity: 1,
+  });
+  const [secondFighterOpacity, setSecondFighterOpacity] = useState({
+    opacity: 1,
+  });
 
   const firstFighterScore =
     pokemon?.[0]?.base_experience * pokemon?.[0]?.weight;
-
   const secondFighterScore =
     pokemon?.[1]?.base_experience * pokemon?.[1]?.weight;
 
   const handleFight = () => {
     if (firstFighterScore > secondFighterScore)
       return (
-        setWinner(`Zwycięzca: ${pokemon?.[0]?.name}`), setShowClearArena(true)
+        setWinner(`Zwycięzca: ${pokemon?.[0]?.name}`),
+        setShowClearArena(true),
+        setSecondFighterOpacity({
+          opacity: 0.3,
+        })
       );
     else if (firstFighterScore < secondFighterScore)
       return (
-        setWinner(`Zwycięzca: ${pokemon?.[1]?.name}`), setShowClearArena(true)
+        setWinner(`Zwycięzca: ${pokemon?.[1]?.name}`),
+        setShowClearArena(true),
+        setFirstFighterOpacity({
+          opacity: 0.3,
+        })
       );
   };
 
   const handleClearArena = () => {
     axios.delete(
-      `http://localhost:3000/arena/${pokemon[0].id}`,
+      `http://localhost:3000/arena/${pokemon?.[0].id}`,
       setArenaLength()
     );
     axios.delete(
-      `http://localhost:3000/arena/${pokemon[1].id}`,
+      `http://localhost:3000/arena/${pokemon?.[1].id}`,
       setArenaLength()
     );
-    setWinner(false);
+    setWinner(result);
+    setShowClearArena(false);
   };
 
   return (
     <ArenaDiv>
-      <FighterContainer pokemon={pokemon[0]} setArenaLength={setArenaLength} />
+      <FighterContainer
+        pokemon={pokemon[0]}
+        setArenaLength={setArenaLength}
+        opacity={firstFighterOpacity}
+      />
       <ArenaContainer>
         <Title>Arena</Title>
         <h4>Score = Base Experience * Weight</h4>
@@ -113,39 +131,44 @@ function ArenaBox({ pokemon, fightButton, setArenaLength }) {
         </ScoreContainer>
         <WinnerBox>{winner}</WinnerBox>
         <ActionButtons>
-          <Button
-            onClick={handleFight}
-            disabled={fightButton}
-            variant="contained"
-            color="primary"
-            size="large"
-            style={{
-              position: "initial",
-              margin: 5,
-              textTransform: "capitalize",
-              width: "80%",
-            }}
-          >
-            WALKA !
-          </Button>
-          <Button
-            onClick={handleClearArena}
-            // disabled={fightButton}
-            variant="contained"
-            color="primary"
-            size="large"
-            style={{
-              position: "initial",
-              margin: 5,
-              textTransform: "capitalize",
-              width: "80%",
-            }}
-          >
-            WYCZYŚĆ ARENĘ
-          </Button>
+          {showClearArena === false && (
+            <Button
+              onClick={handleFight}
+              disabled={fightButton}
+              variant="contained"
+              color="primary"
+              size="large"
+              style={{
+                margin: 5,
+                textTransform: "capitalize",
+                width: "80%",
+              }}
+            >
+              WALKA !
+            </Button>
+          )}
+          {showClearArena === true && (
+            <Button
+              onClick={handleClearArena}
+              variant="contained"
+              color="primary"
+              size="large"
+              style={{
+                margin: 5,
+                textTransform: "capitalize",
+                width: "80%",
+              }}
+            >
+              WYCZYŚĆ ARENĘ
+            </Button>
+          )}
         </ActionButtons>
       </ArenaContainer>
-      <FighterContainer pokemon={pokemon[1]} setArenaLength={setArenaLength} />
+      <FighterContainer
+        pokemon={pokemon[1]}
+        setArenaLength={setArenaLength}
+        opacity={secondFighterOpacity}
+      />
     </ArenaDiv>
   );
 }

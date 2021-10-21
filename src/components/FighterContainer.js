@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { Button } from "@material-ui/core";
@@ -57,7 +57,7 @@ const StatName = styled.p`
   font-weight: 600;
 `;
 
-function FighterContainer({ pokemon, setArenaLength }) {
+function FighterContainer({ pokemon, setArenaLength, opacity }) {
   const usunZAreny = () => {
     axios.delete(`http://localhost:3000/arena/${pokemon.id}`, setArenaLength());
   };
@@ -91,6 +91,7 @@ function FighterContainer({ pokemon, setArenaLength }) {
         <Img
           src={pokemon?.sprites?.other?.dream_world.front_default}
           alt={pokemon?.name}
+          style={opacity}
         />
         <Stats>
           <Stat>

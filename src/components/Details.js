@@ -88,8 +88,8 @@ const StatName = styled.p`
 function Details({ match }) {
   const [info, setInfo] = useState([]);
   const [arena, setArena] = useState([]);
-  const [isFavourite, setIsFavourite] = useState(null);
-  const [isInArena, setIsInArena] = useState(null);
+  const [isFavourite, setIsFavourite] = useState(false);
+  const [isInArena, setIsInArena] = useState(false);
 
   useEffect(() => {
     const loadInfo = async () => {
@@ -99,7 +99,7 @@ function Details({ match }) {
       setInfo(response.data);
     };
     loadInfo();
-  }, []);
+  }, [match.params.name]);
 
   useEffect(() => {
     axios.get(`http://localhost:3000/favourites`).then((response) => {
@@ -108,7 +108,7 @@ function Details({ match }) {
         .includes(info.id);
       setIsFavourite(isPokemonFavourite);
     });
-  }, [isFavourite]);
+  }, [isFavourite, info.id]);
 
   const handleAddToFavourites = () => {
     if (isFavourite === false) {
@@ -138,7 +138,7 @@ function Details({ match }) {
         .includes(info.id);
       setIsInArena(isPokemonInArena);
     });
-  }, [isInArena]);
+  }, [isInArena, info.id]);
 
   const handleAddToArena = () => {
     if (arena.length >= 2 && isInArena === true) {

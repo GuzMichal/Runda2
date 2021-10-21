@@ -13,6 +13,20 @@ const Background = styled.div`
   align-items: center;
 `;
 
+const Title = styled.h1`
+  color: #f5f5f1;
+  letter-spacing: 4px;
+`;
+
+const Brak = styled.div`
+  display: flex;
+  color: #f5f5f1;
+  height: 50vh;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+`;
+
 const List = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -48,18 +62,18 @@ function Fav() {
   );
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  if (!pokemon) {
+  if (pokemon.length === 0) {
     return (
       <Background>
-        <h1>BRAK ULUBIONYCH POKEMONÓW :(</h1>
+        <Title>Ulubione</Title>
+        <Brak>BRAK ULUBIONYCH POKEMONÓW</Brak>
       </Background>
     );
   } else
     return (
       <Background>
-        <h1>Ulubione</h1>
+        <Title>Ulubione</Title>
         <List>
-          {console.log}
           <Pagination
             pokemonsPerPage={pokemonsPerPage}
             totalPokemons={pokemon.length}
