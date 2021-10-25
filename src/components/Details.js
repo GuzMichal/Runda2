@@ -85,6 +85,46 @@ const StatName = styled.p`
   font-weight: 600;
 `;
 
+const SButton = styled(Button)`
+  && {
+    margin: 5px;
+    text-transform: capitalize;
+    width: 80%;
+  }
+`;
+
+const SLink = styled(Link)`
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+`;
+
+const SFavoriteBorder = styled(FavoriteBorder)`
+  && {
+    font-size: 50px;
+  }
+`;
+const SFavorite = styled(Favorite)`
+  && {
+    font-size: 50px;
+    color: #e50914;
+  }
+`;
+
+const SSportsKabaddiOutlinedIcon = styled(SportsKabaddiOutlinedIcon)`
+  && {
+    font-size: 50px;
+  }
+`;
+
+const SSportsKabaddiIcon = styled(SportsKabaddiIcon)`
+  && {
+    font-size: 50px;
+    color: #e50914;
+  }
+`;
+
 function Details({ match }) {
   const [info, setInfo] = useState([]);
   const [arena, setArena] = useState([]);
@@ -182,7 +222,6 @@ function Details({ match }) {
             src={info?.sprites?.other.dream_world.front_default}
             alt={info.name}
           />
-
           <Stats>
             <StatContainer>
               <Stat>
@@ -204,47 +243,23 @@ function Details({ match }) {
               <Checkbox
                 checked={isFavourite}
                 onChange={handleAddToFavourites}
-                icon={<FavoriteBorder style={{ fontSize: 50 }} />}
-                checkedIcon={
-                  <Favorite style={{ fontSize: 50, color: "#E50914" }} />
-                }
+                icon={<SFavoriteBorder />}
+                checkedIcon={<SFavorite />}
               />
               <Checkbox
                 checked={isInArena}
                 onChange={handleAddToArena}
-                icon={<SportsKabaddiOutlinedIcon style={{ fontSize: 50 }} />}
-                checkedIcon={
-                  <SportsKabaddiIcon
-                    style={{ fontSize: 50, color: "#E50914" }}
-                  />
-                }
+                icon={<SSportsKabaddiOutlinedIcon />}
+                checkedIcon={<SSportsKabaddiIcon />}
               />
             </Actions>
           </Stats>
         </CardBox>
-        <Link
-          to={"/"}
-          style={{
-            textDecoration: "none",
-            display: "flex",
-            justifyContent: "center",
-            margin: 10,
-          }}
-        >
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            style={{
-              position: "initial",
-              margin: 5,
-              textTransform: "capitalize",
-              width: "80%",
-            }}
-          >
+        <SLink to={"/"}>
+          <SButton variant="contained" color="primary" size="large">
             Powrót do Pokédex
-          </Button>
-        </Link>
+          </SButton>
+        </SLink>
       </CardDiv>
     </Background>
   );

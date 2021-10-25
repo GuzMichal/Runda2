@@ -57,6 +57,13 @@ const StatName = styled.p`
   font-weight: 600;
 `;
 
+const SButton = styled(Button)`
+  && {
+    margin-right: 5px;
+    text-transform: capitalize;
+  }
+`;
+
 function FighterContainer({ pokemon, setArenaLength, opacity }) {
   const usunZAreny = () => {
     axios.delete(`http://localhost:3000/arena/${pokemon.id}`, setArenaLength());
@@ -73,19 +80,14 @@ function FighterContainer({ pokemon, setArenaLength, opacity }) {
       <Background>
         <CharacterName>
           <FighterName>{pokemon?.name}</FighterName>
-          <Button
+          <SButton
             onClick={usunZAreny}
             variant="contained"
             color="primary"
             size="small"
-            style={{
-              position: "relative",
-              textTransform: "capitalize",
-              marginRight: 5,
-            }}
           >
             Usuń
-          </Button>
+          </SButton>
         </CharacterName>
 
         <Img

@@ -11,6 +11,7 @@ const Navi = styled.div`
   width: 100%;
   height: 10vh;
   background: #e50914;
+  z-index: 100;
 `;
 
 const Pokedex = styled.h1`

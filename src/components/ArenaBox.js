@@ -64,6 +64,15 @@ const ActionButtons = styled.div`
   align-items: center;
 `;
 
+const SButton = styled(Button)`
+  && {
+    margin: 15px;
+    text-transform: capitalize;
+    width: 80%;
+    height: 10vh;
+  }
+`;
+
 function ArenaBox({ pokemon, fightButton, setArenaLength }) {
   const result = "-- WYNIK POJEDYNKU--";
   const [winner, setWinner] = useState(result);
@@ -132,35 +141,25 @@ function ArenaBox({ pokemon, fightButton, setArenaLength }) {
         <WinnerBox>{winner}</WinnerBox>
         <ActionButtons>
           {showClearArena === false && (
-            <Button
+            <SButton
               onClick={handleFight}
               disabled={fightButton}
               variant="contained"
               color="primary"
               size="large"
-              style={{
-                margin: 5,
-                textTransform: "capitalize",
-                width: "80%",
-              }}
             >
               WALKA !
-            </Button>
+            </SButton>
           )}
           {showClearArena === true && (
-            <Button
+            <SButton
               onClick={handleClearArena}
               variant="contained"
               color="primary"
               size="large"
-              style={{
-                margin: 5,
-                textTransform: "capitalize",
-                width: "80%",
-              }}
             >
               WYCZYŚĆ ARENĘ
-            </Button>
+            </SButton>
           )}
         </ActionButtons>
       </ArenaContainer>

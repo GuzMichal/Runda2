@@ -79,6 +79,7 @@ function Pokedex() {
     } else if (pokemon.name.toLowerCase().includes(input.toLowerCase())) {
       return pokemon.name;
     }
+    return false;
   });
 
   const indexOfLastPokemon = currentPage * pokemonsPerPage;
@@ -87,6 +88,7 @@ function Pokedex() {
     indexOfFirstPokemon,
     indexOfLastPokemon
   );
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   if (pokemon.length === 0) {

@@ -10,6 +10,12 @@ const Buttons = styled.div`
   color: white;
 `;
 
+const SButton = styled(Button)`
+  && {
+    margin: 1px;
+  }
+`;
+
 function Pagination({ pokemonsPerPage, totalPokemons, paginate }) {
   const pageNumbers = [];
 
@@ -19,16 +25,15 @@ function Pagination({ pokemonsPerPage, totalPokemons, paginate }) {
   return (
     <Buttons>
       {pageNumbers.map((number) => (
-        <Button
+        <SButton
           key={number}
           variant="contained"
           color="primary"
           size="large"
-          style={{ position: "initial", margin: 1 }}
           onClick={() => paginate(number)}
         >
           {number}
-        </Button>
+        </SButton>
       ))}
     </Buttons>
   );
